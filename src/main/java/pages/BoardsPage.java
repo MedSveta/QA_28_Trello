@@ -9,7 +9,7 @@ import org.openqa.selenium.support.pagefactory.AjaxElementLocatorFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-public class BoardsPage extends BasePage{
+public class BoardsPage extends BasePage {
     public BoardsPage(WebDriver driver) {
         setDriver(driver);
         PageFactory.initElements(new AjaxElementLocatorFactory(driver
@@ -23,16 +23,33 @@ public class BoardsPage extends BasePage{
     @FindBy(xpath = "//button[@data-testid='create-board-submit-button']")
     WebElement btnCreateBoardSubmit;
 
+    @FindBy(xpath = "//div[@class='board-tile-details is-badged']")
+    WebElement firstBoard;
 
-    public boolean validateUrl(){
+    public void openFirstBoard() {
+        firstBoard.click();
+    }
+
+    public boolean validateUrl() {
         return new WebDriverWait(driver, 5)
                 .until(ExpectedConditions.urlContains("boards"));
     }
 
-    public void createNewBoard(Board board){
+    public void createNewBoard(Board board) {
         btnCreateNewBoard.click();
         inputBoardTitle.sendKeys(board.getBoardTitle());
         clickWait(btnCreateBoardSubmit, 5);
 
+    }
+
+    public void createNewBoardNegative(Board board) {
+        btnCreateNewBoard.click();
+        inputBoardTitle.sendKeys(board.getBoardTitle());
+    }
+
+    public boolean buttonCreateIsNotClickable() {
+        return new WebDriverWait(driver, 5)
+                .until(ExpectedConditions.not(ExpectedConditions
+                        .elementToBeClickable(btnCreateBoardSubmit)));
     }
 }
