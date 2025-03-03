@@ -16,7 +16,7 @@ public class BoardsPage extends BasePage {
                 , 10), this);
     }
 
-    @FindBy(xpath = "//li[@data-testid='create-board-tile']")
+    @FindBy(xpath = "//*[text()='Create new board']")
     WebElement btnCreateNewBoard;
     @FindBy(xpath = "//input[@data-testid='create-board-title-input']")
     WebElement inputBoardTitle;
@@ -25,6 +25,12 @@ public class BoardsPage extends BasePage {
 
     @FindBy(xpath = "//div[@class='board-tile-details is-badged']")
     WebElement firstBoard;
+    @FindBy(xpath = "//span[text()='Board deleted.']")
+    WebElement popUpMessageDelete;
+
+    public boolean validatePopUpMessage(String text) {
+        return validateTextInElementWait(popUpMessageDelete, text, 5);
+    }
 
     public void openFirstBoard() {
         firstBoard.click();
@@ -36,7 +42,7 @@ public class BoardsPage extends BasePage {
     }
 
     public void createNewBoard(Board board) {
-        btnCreateNewBoard.click();
+        clickWait(btnCreateNewBoard, 5);
         inputBoardTitle.sendKeys(board.getBoardTitle());
         clickWait(btnCreateBoardSubmit, 5);
 
