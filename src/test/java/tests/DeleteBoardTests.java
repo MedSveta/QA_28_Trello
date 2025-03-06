@@ -11,17 +11,20 @@ import pages.HomePage;
 import pages.LoginPage;
 import pages.MyBoardPage;
 
+import java.lang.reflect.Method;
+
 import static utils.RandomUtils.*;
 
 public class DeleteBoardTests extends AppManager {
     BoardsPage boardsPage;
 
     @BeforeMethod
-    public void login() {
+    public void login(Method method) {
         User user = User.builder()
                 .email("sveta1978medved@gmail.com")
                 .password("Medqwerty12345!")
                 .build();
+        logger.info("start method ->"+method.getName() + "  with user "+ user);
         new HomePage(getDriver()).clickBtnLogin();
         new LoginPage(getDriver()).login(user);
         boardsPage = new BoardsPage(getDriver());
@@ -36,6 +39,7 @@ public class DeleteBoardTests extends AppManager {
     public void  deleteFirstBoardTestPositive(){
         boardsPage.openFirstBoard();
         new MyBoardPage(getDriver()).deleteBoard();
+        
         Assert.assertTrue(boardsPage.validatePopUpMessage("Board deleted."));
     }
 }

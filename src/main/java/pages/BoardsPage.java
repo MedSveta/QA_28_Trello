@@ -28,6 +28,16 @@ public class BoardsPage extends BasePage {
     @FindBy(xpath = "//span[text()='Board deleted.']")
     WebElement popUpMessageDelete;
 
+    @FindBy(xpath = "//button[@data-testid='header-member-menu-button']")
+    WebElement btnAccount;
+    @FindBy(xpath = "//a//span[text()='Manage account']")
+    WebElement btnManageAccount;
+
+    public void openMyAccount(){
+        clickWait(btnAccount, 3);
+        clickWait(btnManageAccount, 3);
+    }
+
     public boolean validatePopUpMessage(String text) {
         return validateTextInElementWait(popUpMessageDelete, text, 5);
     }
