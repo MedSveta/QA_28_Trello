@@ -18,7 +18,7 @@ import static utils.RandomUtils.*;
 public class DeleteBoardTests extends AppManager {
     BoardsPage boardsPage;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void login(Method method) {
         User user = User.builder()
                 .email("sveta1978medved@gmail.com")
@@ -35,7 +35,7 @@ public class DeleteBoardTests extends AppManager {
 
     }
 
-    @Test
+    @Test(groups = {"smoke"})
     public void  deleteFirstBoardTestPositive(){
         boardsPage.openFirstBoard();
         new MyBoardPage(getDriver()).deleteBoard();
